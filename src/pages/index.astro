@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.tsx';
+import About from '../components/About.tsx';
+import Pillars from '../components/Pillars.tsx';
+import Training from '../components/Training.tsx';
+import Contact from '../components/Contact.tsx';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Artur Myzer — AI Expert & Intralogistics Consultant">
+  <Header />
+  <main>
+    <Hero client:load />
+    <About client:visible />
+    <Pillars client:visible />
+    <Training client:visible />
+    <Contact client:visible />
+  </main>
+  <Footer />
+</Layout>
