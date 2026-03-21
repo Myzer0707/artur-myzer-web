@@ -57,7 +57,7 @@ export default function Contact() {
           <motion.div {...fadeInUp} transition={{ duration: 0.6, delay: 0.15 }}>
             <form
               className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
-              action="https://formspree.io/f/placeholder"
+              action="https://myzer.app.n8n.cloud/webhook/contact-form"
               method="POST"
             >
               <div className="space-y-5">
