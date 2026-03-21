@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import ParticleNetwork from './ParticleNetwork';
+import { cn } from '../lib/utils';
 
 function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -27,31 +28,31 @@ const dmaic = [
     letter: 'D',
     name: 'Definiuj',
     desc: 'Analiza potrzeb klienta, definicja celu wdrozenia, scope projektu',
-    color: 'from-am-primary to-am-primary/70',
+    gradient: 'from-[#006991] to-[#006991]/60',
   },
   {
     letter: 'M',
     name: 'Mierz',
     desc: 'PFEP, Spaghetti diagram, Gemba Walk — prawdziwe dane z hali produkcyjnej',
-    color: 'from-am-mint to-am-mint/70',
+    gradient: 'from-[#4ADBC8] to-[#4ADBC8]/60',
   },
   {
     letter: 'A',
     name: 'Analizuj',
     desc: 'Identyfikacja waste, optymalizacja przeplywow materialowych',
-    color: 'from-cyan-400 to-cyan-400/70',
+    gradient: 'from-[#00E9F4] to-[#00E9F4]/60',
   },
   {
     letter: 'I',
     name: 'Implementuj',
     desc: 'Projektowanie layoutu, dobor technologii, wdrozenie AGV/AMR',
-    color: 'from-am-primary to-am-mint',
+    gradient: 'from-[#006991] to-[#4ADBC8]',
   },
   {
     letter: 'C',
     name: 'Kontroluj',
     desc: 'Monitoring KPI, optymalizacja ciagla, support 24/7',
-    color: 'from-am-mint to-cyan-400',
+    gradient: 'from-[#4ADBC8] to-[#00E9F4]',
   },
 ];
 
@@ -76,7 +77,7 @@ export default function Intralogistics() {
   const inView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="intralogistyka" ref={sectionRef} className="relative bg-am-dark overflow-hidden">
+    <section id="intralogistyka" ref={sectionRef} className="relative bg-[#030303] overflow-hidden">
       {/* Particle background */}
       <div className="absolute inset-0 opacity-30">
         <ParticleNetwork
@@ -90,9 +91,10 @@ export default function Intralogistics() {
       </div>
 
       {/* Gradient overlays */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-am-dark to-transparent pointer-events-none z-[1]" />
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-am-dark to-transparent pointer-events-none z-[1]" />
-      <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-am-primary/8 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#030303] to-transparent pointer-events-none z-[1]" />
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#030303] to-transparent pointer-events-none z-[1]" />
+      <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[#006991]/[0.06] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-[#4ADBC8]/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container-narrow section-padding relative z-10">
         {/* Section header */}
@@ -102,16 +104,16 @@ export default function Intralogistics() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <span className="badge-primary bg-am-primary/10 text-am-primary text-xs uppercase tracking-widest mb-6 inline-block border border-am-primary/20">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#006991]/[0.1] backdrop-blur-sm border border-[#006991]/[0.2] rounded-full text-xs font-heading font-semibold uppercase tracking-widest text-[#006991] mb-6">
             Filar 1
           </span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-4">
             Ekspert Intralogistyki
           </h2>
-          <p className="text-xl md:text-2xl text-am-mint font-heading font-medium mb-6">
+          <p className="text-xl md:text-2xl text-[#4ADBC8] font-heading font-medium mb-6">
             Grupa Myzer — od projektu po wdrozenie
           </p>
-          <p className="text-white/50 max-w-2xl mx-auto text-lg font-body">
+          <p className="text-white/40 max-w-2xl mx-auto text-lg font-body">
             18 lat doswiadczenia, 50 000+ produktow, oddzialy w 4 krajach.
             Kazdy projekt realizowany metoda DMAIC z Six Sigma.
           </p>
@@ -122,7 +124,7 @@ export default function Intralogistics() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-20"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-20"
         >
           {stats.map((stat, i) => (
             <motion.div
@@ -130,12 +132,15 @@ export default function Intralogistics() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ delay: 0.3 + i * 0.1 }}
-              className="card-glass p-6 text-center group hover:bg-white/10 transition-all duration-500"
+              className="relative group"
             >
-              <div className="text-3xl md:text-4xl font-heading font-bold text-white mb-2">
-                <Counter target={stat.value} suffix={stat.suffix} />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-[#006991]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-6 text-center group-hover:border-white/[0.12] transition-all duration-500">
+                <div className="text-3xl md:text-4xl font-heading font-bold text-white mb-2 group-hover:text-[#4ADBC8] transition-colors duration-500">
+                  <Counter target={stat.value} suffix={stat.suffix} />
+                </div>
+                <div className="text-sm text-white/40 font-body group-hover:text-white/60 transition-colors">{stat.label}</div>
               </div>
-              <div className="text-sm text-white/50 font-body group-hover:text-am-mint transition-colors">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -150,7 +155,7 @@ export default function Intralogistics() {
           <h3 className="text-2xl md:text-3xl font-heading font-bold text-white text-center mb-4">
             Metodologia DMAIC
           </h3>
-          <p className="text-white/40 text-center mb-12 font-body">
+          <p className="text-white/30 text-center mb-12 font-body">
             Sprawdzona metoda z Six Sigma — kazdy projekt przechodzi pelny cykl
           </p>
 
@@ -163,16 +168,21 @@ export default function Intralogistics() {
                 transition={{ delay: 0.5 + i * 0.15 }}
                 className="relative group"
               >
-                <div className="card-glass p-6 h-full hover:bg-white/10 transition-all duration-500 text-center">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mx-auto mb-4 text-white font-heading font-bold text-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                <div className="bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-6 h-full hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-500 text-center">
+                  <div className={cn(
+                    'w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center mx-auto mb-4',
+                    'text-white font-heading font-bold text-2xl',
+                    'group-hover:scale-110 group-hover:shadow-lg transition-all duration-300',
+                    step.gradient,
+                  )}>
                     {step.letter}
                   </div>
                   <h4 className="font-heading font-bold text-white text-lg mb-2">{step.name}</h4>
-                  <p className="text-white/50 text-sm font-body leading-relaxed">{step.desc}</p>
+                  <p className="text-white/40 text-sm font-body leading-relaxed">{step.desc}</p>
                 </div>
                 {/* Connector arrow (except last) */}
                 {i < dmaic.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-3 text-am-mint/30">
+                  <div className="hidden md:block absolute top-1/2 -right-3 text-[#4ADBC8]/20">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -188,12 +198,15 @@ export default function Intralogistics() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="border-gradient p-8 md:p-12 bg-am-dark-lighter/50 backdrop-blur-sm rounded-2xl mb-20 text-center"
+          className="relative mb-20"
         >
-          <blockquote className="text-xl md:text-2xl lg:text-3xl font-heading font-bold text-white leading-snug mb-4">
-            "30 minut w zakladzie i wiem, czy wdrozenie AGV jest mozliwe"
-          </blockquote>
-          <p className="text-am-mint font-heading font-medium">— Artur Myzer</p>
+          <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-[#4ADBC8]/30 via-[#006991]/20 to-[#4ADBC8]/30 blur-[1px]" />
+          <div className="relative bg-[#030303]/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 text-center border border-white/[0.06]">
+            <blockquote className="text-xl md:text-2xl lg:text-3xl font-heading font-bold text-white leading-snug mb-4">
+              "30 minut w zakladzie i wiem, czy wdrozenie AGV jest mozliwe"
+            </blockquote>
+            <p className="text-[#4ADBC8] font-heading font-medium">— Artur Myzer</p>
+          </div>
         </motion.div>
 
         {/* Services & Clients */}
@@ -206,10 +219,12 @@ export default function Intralogistics() {
             <h3 className="text-xl font-heading font-bold text-white mb-6">Uslugi</h3>
             <ul className="space-y-3">
               {services.map((s) => (
-                <li key={s} className="flex items-start gap-3 text-white/70 font-body">
-                  <svg className="w-5 h-5 text-am-mint flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                <li key={s} className="flex items-start gap-3 text-white/60 font-body group/item hover:text-white/80 transition-colors">
+                  <div className="w-5 h-5 mt-0.5 rounded-full bg-[#4ADBC8]/10 flex items-center justify-center flex-shrink-0 group-hover/item:bg-[#4ADBC8]/20 transition-colors">
+                    <svg className="w-3 h-3 text-[#4ADBC8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                   {s}
                 </li>
               ))}
@@ -222,7 +237,7 @@ export default function Intralogistics() {
             transition={{ duration: 0.7, delay: 0.7 }}
           >
             <h3 className="text-xl font-heading font-bold text-white mb-6">Klienci</h3>
-            <p className="text-white/50 font-body mb-6">
+            <p className="text-white/40 font-body mb-6">
               Wspolpracujemy z najwiekszymi koncernami w Europie:
             </p>
             <div className="grid grid-cols-2 gap-4">
@@ -232,13 +247,13 @@ export default function Intralogistics() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.8 + i * 0.1 }}
-                  className="card-glass p-4 text-center font-heading font-semibold text-white/80 hover:text-am-mint hover:bg-white/10 transition-all duration-300"
+                  className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4 text-center font-heading font-semibold text-white/60 hover:text-[#4ADBC8] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300"
                 >
                   {client}
                 </motion.div>
               ))}
             </div>
-            <p className="text-white/30 text-sm mt-4 font-body italic">
+            <p className="text-white/25 text-sm mt-4 font-body italic">
               Unikalna nawigacja 3D Lidar — inna niz u konkurencji
             </p>
           </motion.div>
