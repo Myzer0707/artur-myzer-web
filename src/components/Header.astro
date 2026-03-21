@@ -7,26 +7,21 @@ const navLinks = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-myzer-grey/50" id="header">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-am-grey-light/50" id="header">
   <div class="container-narrow flex items-center justify-between h-16 md:h-20 px-6 lg:px-16">
-    <!-- Logo -->
     <a href="/" class="flex items-center gap-3 group">
-      <div class="w-10 h-10 bg-myzer-orange rounded-lg flex items-center justify-center text-white font-heading font-bold text-lg
+      <div class="w-10 h-10 bg-am-primary rounded-lg flex items-center justify-center text-white font-heading font-bold text-lg
                   group-hover:scale-105 transition-transform">
         AM
       </div>
       <div class="hidden sm:block">
-        <span class="font-heading font-bold text-myzer-dark text-lg">Artur Myzer</span>
+        <span class="font-heading font-bold text-am-dark text-lg tracking-tight">ARTUR MYZER</span>
       </div>
     </a>
 
-    <!-- Desktop Nav -->
     <nav class="hidden md:flex items-center gap-8">
       {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class="font-heading font-medium text-sm text-grey-medium hover:text-myzer-orange transition-colors"
-        >
+        <a href={link.href} class="font-heading font-medium text-sm text-am-grey-dark hover:text-am-primary transition-colors">
           {link.label}
         </a>
       ))}
@@ -35,32 +30,21 @@ const navLinks = [
       </a>
     </nav>
 
-    <!-- Mobile Menu Button -->
-    <button
-      class="md:hidden p-2 text-myzer-dark"
-      id="mobile-menu-btn"
-      aria-label="Menu"
-    >
+    <button class="md:hidden p-2 text-am-dark" id="mobile-menu-btn" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
   </div>
 
-  <!-- Mobile Menu -->
-  <div class="hidden md:hidden bg-white border-b border-myzer-grey" id="mobile-menu">
+  <div class="hidden md:hidden bg-white border-b border-am-grey-light" id="mobile-menu">
     <nav class="flex flex-col px-6 py-4 gap-4">
       {navLinks.map((link) => (
-        <a
-          href={link.href}
-          class="font-heading font-medium text-grey-medium hover:text-myzer-orange transition-colors py-2"
-        >
+        <a href={link.href} class="font-heading font-medium text-am-grey-dark hover:text-am-primary transition-colors py-2">
           {link.label}
         </a>
       ))}
-      <a href="#kontakt" class="btn-primary text-sm text-center !px-6 !py-2.5 mt-2">
-        Porozmawiajmy
-      </a>
+      <a href="#kontakt" class="btn-primary text-sm text-center !px-6 !py-2.5 mt-2">Porozmawiajmy</a>
     </nav>
   </div>
 </header>
@@ -68,20 +52,10 @@ const navLinks = [
 <script>
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
-  btn?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
-  });
-  // Close on link click
-  menu?.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => menu?.classList.add('hidden'));
-  });
-  // Header shadow on scroll
+  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu?.classList.add('hidden')));
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 10) {
-      header?.classList.add('shadow-sm');
-    } else {
-      header?.classList.remove('shadow-sm');
-    }
+    header?.classList.toggle('shadow-sm', window.scrollY > 10);
   });
 </script>

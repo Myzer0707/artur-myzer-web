@@ -2,16 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
 @layer base {
   :root {
-    --myzer-dark: #141A22;
-    --myzer-orange: #EB5D30;
-    --myzer-grey: #F3F3F4;
-    --myzer-navy: #006991;
-    --myzer-green: #0BAF4D;
+    --am-primary: #006991;
+    --am-dark: #0E1E2B;
+    --am-mint: #4ADBC8;
+    --am-mint-light: #8AE9C1;
+    --am-cyan: #00E9F4;
   }
 
   html {
@@ -19,7 +19,7 @@
   }
 
   body {
-    @apply font-body text-myzer-dark bg-white antialiased;
+    @apply font-body text-am-dark bg-white antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -27,7 +27,7 @@
   }
 
   ::selection {
-    @apply bg-myzer-orange/20 text-myzer-dark;
+    @apply bg-am-primary/20 text-am-dark;
   }
 }
 
@@ -41,17 +41,19 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-8 py-4 bg-myzer-orange text-white font-heading font-semibold
-           rounded-lg hover:bg-myzer-orange/90 transition-all duration-300
-           hover:shadow-lg hover:shadow-myzer-orange/25 hover:-translate-y-0.5;
+    @apply inline-flex items-center gap-2 px-8 py-4 bg-am-primary text-white font-heading font-semibold
+           rounded-lg hover:bg-am-primary/90 transition-all duration-300
+           hover:shadow-lg hover:shadow-am-primary/25 hover:-translate-y-0.5;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-8 py-4 border-2 border-myzer-dark text-myzer-dark font-heading font-semibold
-           rounded-lg hover:bg-myzer-dark hover:text-white transition-all duration-300;
+    @apply inline-flex items-center gap-2 px-8 py-4 border-2 border-am-dark text-am-dark font-heading font-semibold
+           rounded-lg hover:bg-am-dark hover:text-white transition-all duration-300;
   }
 
-  .gradient-text {
-    @apply bg-gradient-to-r from-myzer-orange to-myzer-navy bg-clip-text text-transparent;
+  .btn-mint {
+    @apply inline-flex items-center gap-2 px-8 py-4 bg-am-mint text-am-dark font-heading font-semibold
+           rounded-lg hover:bg-am-mint/80 transition-all duration-300
+           hover:shadow-lg hover:shadow-am-mint/25 hover:-translate-y-0.5;
   }
 }

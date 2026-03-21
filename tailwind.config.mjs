@@ -4,18 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        'myzer-dark': '#141A22',
-        'myzer-orange': '#EB5D30',
-        'myzer-grey': '#F3F3F4',
-        'myzer-navy': '#006991',
-        'myzer-green': '#0BAF4D',
-        'grey-medium': '#4B5D6B',
-        'grey-cool': '#8B8D8E',
-        'blue-grey': '#7D9AAA',
+        'am-primary': '#006991',
+        'am-dark': '#0E1E2B',
+        'am-mint': '#4ADBC8',
+        'am-mint-light': '#8AE9C1',
+        'am-cyan': '#00E9F4',
+        'am-grey-dark': '#444444',
+        'am-grey': '#B0B0B0',
+        'am-grey-light': '#F3F3F4',
       },
       fontFamily: {
-        heading: ['Montserrat', 'Poppins', 'sans-serif'],
-        body: ['Montserrat', 'Poppins', 'sans-serif'],
+        heading: ['Red Hat Display', 'Montserrat', 'sans-serif'],
+        body: ['Soleto', 'Montserrat', 'sans-serif'],
         mono: ['JetBrains Mono', 'Consolas', 'monospace'],
       },
       animation: {
