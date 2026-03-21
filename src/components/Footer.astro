@@ -2,9 +2,10 @@
 const currentYear = new Date().getFullYear();
 
 const navLinks = [
-  { href: '#o-mnie', label: 'O mnie' },
-  { href: '#filary', label: 'Ekspertyza' },
-  { href: '#szkolenia', label: 'Szkolenia' },
+  { href: '#historia', label: 'Historia' },
+  { href: '#intralogistyka', label: 'Intralogistyka' },
+  { href: '#ai-expert', label: 'AI Expert' },
+  { href: '#oferta', label: 'Oferta' },
   { href: '#kontakt', label: 'Kontakt' },
 ];
 ---
@@ -18,16 +19,12 @@ const navLinks = [
       <!-- Brand -->
       <div>
         <a href="/" class="flex items-center gap-3 group mb-6">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-heading font-bold text-lg
-                      bg-gradient-to-br from-am-primary to-am-mint/80
-                      group-hover:shadow-[0_0_20px_rgba(74,219,200,0.3)] transition-all">
-            AM
-          </div>
+          <img src="/images/icon-white.svg" alt="Artur Myzer" class="w-10 h-10 group-hover:drop-shadow-[0_0_15px_rgba(74,219,200,0.3)] transition-all" />
           <span class="font-heading font-bold text-white tracking-tight text-lg">ARTUR MYZER</span>
         </a>
         <p class="text-am-grey text-sm leading-relaxed max-w-xs">
           AI Expert & Intralogistics Consultant.
-          Lacze sztuczna inteligencje z 18-letnim doswiadczeniem operacyjnym.
+          Łączę sztuczną inteligencję z 18-letnim doświadczeniem operacyjnym.
         </p>
       </div>
 
@@ -51,7 +48,7 @@ const navLinks = [
             artur@arturmyzer.ai
           </a>
           <a href="https://www.linkedin.com/in/arturmyzer/" target="_blank" rel="noopener" class="text-am-grey hover:text-am-mint transition-colors text-sm">
-            LinkedIn
+            LinkedIn — Artur Myzer
           </a>
         </div>
       </div>
@@ -59,7 +56,7 @@ const navLinks = [
 
     <!-- Bottom bar -->
     <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-am-grey/60 text-xs">&copy; {currentYear} Artur Myzer. Wszelkie prawa zastrzezone.</p>
+      <p class="text-am-grey/60 text-xs">&copy; {currentYear} Artur Myzer. Wszelkie prawa zastrzeżone. MYZER&reg; jest znakiem towarowym zastrzeżonym w UE.</p>
       <div class="flex items-center gap-4">
         <a href="https://www.linkedin.com/in/arturmyzer/" target="_blank" rel="noopener"
            class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-am-grey hover:text-am-mint hover:bg-white/10 transition-all">

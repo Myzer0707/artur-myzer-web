@@ -1,215 +1,170 @@
-import { motion, useMotionValue, useTransform, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
+import ParticleNetwork from './ParticleNetwork';
 
 function AnimatedCounter({ target, suffix = '', duration = 2 }: { target: number; suffix?: string; duration?: number }) {
-  const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
+  const inView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
-    let start = 0;
-    const end = target;
+    if (!inView) return;
     const startTime = performance.now();
-
-    function animate(now: number) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / (duration * 1000), 1);
+    function step(now: number) {
+      const progress = Math.min((now - startTime) / (duration * 1000), 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(eased * end);
-      setCount(current);
-      if (progress < 1) requestAnimationFrame(animate);
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
     }
-    requestAnimationFrame(animate);
-  }, [isInView, target, duration]);
+    requestAnimationFrame(step);
+  }, [inView, target, duration]);
 
-  return <span ref={ref}>{count}{suffix}</span>;
+  return <span ref={ref}>{count.toLocaleString('pl-PL')}{suffix}</span>;
 }
 
-const stagger = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
-  },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.25, 0.4, 0.25, 1] } },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.25, 0.4, 0.25, 1] } },
-};
-
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const blob1X = useTransform(mouseX, [0, 1], [-20, 20]);
-  const blob1Y = useTransform(mouseY, [0, 1], [-20, 20]);
-  const blob2X = useTransform(mouseX, [0, 1], [15, -15]);
-  const blob2Y = useTransform(mouseY, [0, 1], [15, -15]);
-
-  useEffect(() => {
-    function handleMouse(e: MouseEvent) {
-      const { clientX, clientY } = e;
-      mouseX.set(clientX / window.innerWidth);
-      mouseY.set(clientY / window.innerHeight);
-    }
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, []);
-
   const stats = [
-    { value: 18, suffix: '+', label: 'lat w intralogistyce' },
-    { value: 50, suffix: '+', label: 'wdrozenia AGV/AMR' },
-    { value: 200, suffix: '+', label: 'przeszkolonych osob' },
+    { value: 18, suffix: '+', label: 'lat doświadczenia' },
+    { value: 50000, suffix: '+', label: 'produktów dostarczonych' },
+    { value: 36, suffix: '', label: 'wdrożeń AGV' },
+    { value: 4, suffix: '', label: 'kraje ekspansji' },
   ];
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center bg-am-dark overflow-hidden noise-overlay">
-      {/* Animated mesh gradient blobs */}
-      <motion.div
-        className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full morph-blob opacity-20"
-        style={{
-          background: 'radial-gradient(circle, rgba(0,105,145,0.6) 0%, transparent 70%)',
-          x: blob1X,
-          y: blob1Y,
-          filter: 'blur(60px)',
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 left-1/6 w-[400px] h-[400px] rounded-full morph-blob opacity-15"
-        style={{
-          background: 'radial-gradient(circle, rgba(74,219,200,0.5) 0%, transparent 70%)',
-          x: blob2X,
-          y: blob2Y,
-          filter: 'blur(50px)',
-          animationDelay: '-4s',
-        }}
-      />
-      <motion.div
-        className="absolute top-1/2 right-1/6 w-[300px] h-[300px] rounded-full morph-blob opacity-10"
-        style={{
-          background: 'radial-gradient(circle, rgba(0,233,244,0.4) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-          animationDelay: '-2s',
-        }}
-      />
+    <section id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-am-dark">
+      {/* Particle Network Background */}
+      <div className="absolute inset-0">
+        <ParticleNetwork
+          particleCount={100}
+          connectionDistance={160}
+          particleColor="0, 105, 145"
+          lineColor="74, 219, 200"
+          mouseRadius={220}
+          speed={0.3}
+        />
+      </div>
 
-      {/* Dot grid */}
-      <div className="absolute inset-0 dot-grid opacity-40" />
-
-      {/* Decorative lines */}
-      <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-am-mint/10 to-transparent" />
-      <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-am-primary/10 to-transparent" />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-am-dark/40 via-transparent to-am-dark/80 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-am-primary/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-am-mint/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Content */}
-      <div className="container-narrow relative z-10 section-padding pt-32 md:pt-40">
+      <div className="relative z-10 container-narrow section-padding pt-32 pb-20">
+        {/* Logo animation */}
         <motion.div
-          className="max-w-4xl"
-          variants={stagger}
-          initial="hidden"
-          animate="show"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="flex justify-center mb-10"
         >
-          {/* Badge */}
-          <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-am-mint/10 backdrop-blur-sm border border-am-mint/20 rounded-full mb-8">
-              <span className="w-2 h-2 bg-am-mint rounded-full animate-pulse" />
-              <span className="text-am-mint font-heading font-semibold text-sm">AI Expert &bull; Intralogistics Consultant</span>
-            </span>
-          </motion.div>
+          <img
+            src="/images/icon-white.svg"
+            alt="Artur Myzer Logo"
+            className="w-20 h-20 md:w-24 md:h-24 drop-shadow-[0_0_30px_rgba(74,219,200,0.3)]"
+          />
+        </motion.div>
 
-          {/* Headline */}
-          <motion.h1
-            className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white leading-[1.1] mb-8"
-            variants={fadeUp}
-          >
-            Lacze{' '}
-            <span className="relative">
-              <span className="text-gradient">sztuczna inteligencje</span>
-              <motion.span
-                className="absolute -bottom-2 left-0 h-[3px] bg-gradient-to-r from-am-mint to-am-cyan rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 0.8, delay: 1.2, ease: [0.25, 0.4, 0.25, 1] }}
-              />
-            </span>
-            <br className="hidden md:block" />
-            {' '}z 18-letnim doswiadczeniem{' '}
-            <br className="hidden lg:block" />
-            w{' '}
-            <span className="text-am-cyan">intralogistyce</span>
-          </motion.h1>
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="flex justify-center mb-8"
+        >
+          <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-am-mint/10 backdrop-blur-sm border border-am-mint/20 rounded-full">
+            <span className="w-2 h-2 bg-am-mint rounded-full animate-pulse" />
+            <span className="text-am-mint font-heading font-semibold text-xs uppercase tracking-widest">AI Expert & Intralogistics Consultant</span>
+          </span>
+        </motion.div>
 
-          {/* Subheadline */}
-          <motion.p
-            className="text-lg md:text-xl text-am-grey max-w-2xl mb-12 leading-relaxed"
-            variants={fadeUp}
-          >
-            Pomagam firmom B2B wdrazac AI w codziennych procesach i optymalizowac
-            intralogistyke metodami Lean, DMAIC i AGV/AMR.{' '}
-            <span className="text-white font-medium">Konkretne wyniki, nie puste obietnice.</span>
-          </motion.p>
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold text-white text-center leading-[1.1] mb-8 max-w-5xl mx-auto"
+        >
+          Łączę sztuczną inteligencję{' '}
+          <span className="text-gradient">z 18-letnim doświadczeniem</span>{' '}
+          w intralogistyce
+        </motion.h1>
 
-          {/* CTA Buttons */}
-          <motion.div className="flex flex-col sm:flex-row gap-4" variants={fadeUp}>
-            <a href="#szkolenia" className="btn-gradient text-center justify-center group">
-              Szkolenia AI
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-            <a href="#o-mnie" className="btn-ghost text-center justify-center group">
-              Poznaj mnie
-              <svg className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </a>
-          </motion.div>
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.6 }}
+          className="text-lg md:text-xl text-white/60 text-center max-w-2xl mx-auto mb-12 font-body leading-relaxed"
+        >
+          Dwa filary ekspertyzy. Jedna misja — realne wyniki dla Twojej firmy.
+        </motion.p>
 
-          {/* Stats */}
-          <motion.div
-            className="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/10"
-            variants={fadeUp}
-          >
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                className="group"
-                variants={scaleIn}
-              >
-                <div className="text-3xl md:text-5xl font-heading font-bold text-gradient mb-2">
-                  <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                </div>
-                <div className="text-sm text-am-grey group-hover:text-am-mint transition-colors">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
+        >
+          <a href="#ai-expert" className="btn-gradient text-base group">
+            AI Expert
+            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a href="#intralogistyka" className="btn-ghost text-base group">
+            Ekspert Intralogistyki
+            <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </motion.div>
+
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.7 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-12 border-t border-white/10"
+        >
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2 + i * 0.1 }}
+              className="text-center"
+            >
+              <div className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-white mb-2">
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="text-sm text-white/50 font-body">{stat.label}</div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
       >
-        <span className="text-xs text-am-grey/50 font-heading uppercase tracking-widest">Scroll</span>
         <motion.div
-          className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center pt-1"
-          animate={{ opacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          className="flex flex-col items-center gap-2"
         >
-          <motion.div
-            className="w-1 h-2 bg-am-mint rounded-full"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
+          <span className="text-white/30 text-xs font-body uppercase tracking-widest">Przewiń</span>
+          <div className="w-5 h-8 border-2 border-white/20 rounded-full flex justify-center pt-1.5">
+            <motion.div
+              className="w-1 h-2 bg-am-mint rounded-full"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </div>
         </motion.div>
       </motion.div>
     </section>
