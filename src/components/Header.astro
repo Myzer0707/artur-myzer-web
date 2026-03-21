@@ -7,55 +7,151 @@ const navLinks = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-lg border-b border-am-grey-light/50" id="header">
-  <div class="container-narrow flex items-center justify-between h-16 md:h-20 px-6 lg:px-16">
-    <a href="/" class="flex items-center gap-3 group">
-      <div class="w-10 h-10 bg-am-primary rounded-lg flex items-center justify-center text-white font-heading font-bold text-lg
-                  group-hover:scale-105 transition-transform">
-        AM
+<!-- Scroll progress bar -->
+<div class="scroll-progress" id="scroll-progress" style="transform: scaleX(0)"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="header">
+  <div class="max-w-6xl mx-auto flex items-center justify-between h-20 px-6 lg:px-16">
+    <a href="/" class="flex items-center gap-3 group relative z-10">
+      <div class="relative">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white font-heading font-bold text-lg
+                    bg-gradient-to-br from-am-primary to-am-mint/80
+                    group-hover:shadow-[0_0_20px_rgba(74,219,200,0.4)] transition-all duration-300
+                    group-hover:scale-105">
+          AM
+        </div>
       </div>
       <div class="hidden sm:block">
-        <span class="font-heading font-bold text-am-dark text-lg tracking-tight">ARTUR MYZER</span>
+        <span class="font-heading font-bold text-lg tracking-tight transition-colors duration-300" id="logo-text">ARTUR MYZER</span>
       </div>
     </a>
 
-    <nav class="hidden md:flex items-center gap-8">
+    <nav class="hidden md:flex items-center gap-1">
       {navLinks.map((link) => (
-        <a href={link.href} class="font-heading font-medium text-sm text-am-grey-dark hover:text-am-primary transition-colors">
+        <a href={link.href} class="nav-link relative px-4 py-2 font-heading font-medium text-sm transition-all duration-300 rounded-lg hover:bg-white/10">
           {link.label}
         </a>
       ))}
-      <a href="#kontakt" class="btn-primary text-sm !px-6 !py-2.5">
+      <a href="#kontakt" class="ml-4 relative inline-flex items-center gap-2 px-6 py-2.5 font-heading font-semibold text-sm rounded-xl
+                                bg-gradient-to-r from-am-mint to-am-cyan text-am-dark
+                                hover:shadow-[0_4px_20px_rgba(74,219,200,0.4)] hover:-translate-y-0.5
+                                transition-all duration-300">
         Porozmawiajmy
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
       </a>
     </nav>
 
-    <button class="md:hidden p-2 text-am-dark" id="mobile-menu-btn" aria-label="Menu">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
+    <button class="md:hidden relative z-10 p-2 rounded-lg hover:bg-white/10 transition-colors" id="mobile-menu-btn" aria-label="Menu">
+      <div class="w-6 h-5 flex flex-col justify-between" id="hamburger">
+        <span class="block h-0.5 w-6 bg-current rounded-full transition-all duration-300 origin-center" id="line1"></span>
+        <span class="block h-0.5 w-6 bg-current rounded-full transition-all duration-300" id="line2"></span>
+        <span class="block h-0.5 w-4 bg-current rounded-full transition-all duration-300 origin-center ml-auto" id="line3"></span>
+      </div>
     </button>
   </div>
 
-  <div class="hidden md:hidden bg-white border-b border-am-grey-light" id="mobile-menu">
-    <nav class="flex flex-col px-6 py-4 gap-4">
-      {navLinks.map((link) => (
-        <a href={link.href} class="font-heading font-medium text-am-grey-dark hover:text-am-primary transition-colors py-2">
+  <!-- Mobile menu -->
+  <div class="md:hidden overflow-hidden transition-all duration-500 max-h-0" id="mobile-menu">
+    <nav class="flex flex-col px-6 py-6 gap-1 bg-am-dark/95 backdrop-blur-xl border-t border-white/10">
+      {navLinks.map((link, i) => (
+        <a href={link.href}
+           class="mobile-nav-link font-heading font-medium text-white/80 hover:text-am-mint py-3 px-4 rounded-lg hover:bg-white/5 transition-all duration-300"
+           style={`animation-delay: ${i * 50}ms`}>
           {link.label}
         </a>
       ))}
-      <a href="#kontakt" class="btn-primary text-sm text-center !px-6 !py-2.5 mt-2">Porozmawiajmy</a>
+      <a href="#kontakt" class="mt-4 py-3 px-6 bg-gradient-to-r from-am-mint to-am-cyan text-am-dark font-heading font-semibold text-sm rounded-xl text-center
+                              hover:shadow-[0_4px_20px_rgba(74,219,200,0.4)] transition-all duration-300">
+        Porozmawiajmy
+      </a>
     </nav>
   </div>
 </header>
 
 <script>
+  // Mobile menu toggle
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
-  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
-  menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu?.classList.add('hidden')));
-  const header = document.getElementById('header');
-  window.addEventListener('scroll', () => {
-    header?.classList.toggle('shadow-sm', window.scrollY > 10);
+  const line1 = document.getElementById('line1');
+  const line2 = document.getElementById('line2');
+  const line3 = document.getElementById('line3');
+  let isOpen = false;
+
+  btn?.addEventListener('click', () => {
+    isOpen = !isOpen;
+    if (isOpen) {
+      menu!.style.maxHeight = menu!.scrollHeight + 'px';
+      line1!.style.transform = 'rotate(45deg) translateY(8px)';
+      line2!.style.opacity = '0';
+      line3!.style.transform = 'rotate(-45deg) translateY(-8px)';
+      line3!.style.width = '1.5rem';
+    } else {
+      menu!.style.maxHeight = '0';
+      line1!.style.transform = '';
+      line2!.style.opacity = '';
+      line3!.style.transform = '';
+      line3!.style.width = '';
+    }
   });
+
+  menu?.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      isOpen = false;
+      menu!.style.maxHeight = '0';
+      line1!.style.transform = '';
+      line2!.style.opacity = '';
+      line3!.style.transform = '';
+      line3!.style.width = '';
+    })
+  );
+
+  // Header scroll behavior
+  const header = document.getElementById('header');
+  const logoText = document.getElementById('logo-text');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const progress = document.getElementById('scroll-progress');
+  let lastScroll = 0;
+
+  function updateHeader() {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? scrollY / docHeight : 0;
+
+    // Progress bar
+    if (progress) {
+      progress.style.transform = `scaleX(${scrollPercent})`;
+    }
+
+    // Header background
+    if (scrollY > 50) {
+      header?.classList.add('bg-am-dark/90', 'backdrop-blur-xl', 'shadow-lg', 'shadow-black/10');
+      header?.classList.remove('bg-transparent');
+      logoText?.classList.add('text-white');
+      logoText?.classList.remove('text-white');
+      navLinks.forEach(l => {
+        l.classList.add('text-white/70', 'hover:text-white');
+        l.classList.remove('text-white/80');
+      });
+      if (btn) btn.classList.add('text-white');
+    } else {
+      header?.classList.remove('bg-am-dark/90', 'backdrop-blur-xl', 'shadow-lg', 'shadow-black/10');
+      header?.classList.add('bg-transparent');
+    }
+
+    // On hero section — always light text
+    logoText?.classList.add('text-white');
+    if (scrollY > 50) {
+      navLinks.forEach(l => l.classList.add('text-white/70'));
+    } else {
+      navLinks.forEach(l => l.classList.add('text-white/80'));
+    }
+    if (btn) btn.classList.add('text-white');
+
+    lastScroll = scrollY;
+  }
+
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
 </script>

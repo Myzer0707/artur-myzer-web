@@ -2,9 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.tsx';
+import LogoCloud from '../components/LogoCloud.tsx';
 import About from '../components/About.tsx';
 import Pillars from '../components/Pillars.tsx';
 import Training from '../components/Training.tsx';
+import Process from '../components/Process.tsx';
 import Contact from '../components/Contact.tsx';
 import Footer from '../components/Footer.astro';
 ---
@@ -13,9 +15,11 @@ import Footer from '../components/Footer.astro';
   <Header />
   <main>
     <Hero client:load />
+    <LogoCloud client:visible />
     <About client:visible />
     <Pillars client:visible />
     <Training client:visible />
+    <Process client:visible />
     <Contact client:visible />
   </main>
   <Footer />
