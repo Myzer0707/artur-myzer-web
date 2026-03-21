@@ -1,8 +1,13 @@
-name: Build and Deploy to Hostinger
+name: Build and Deploy
 
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
@@ -18,6 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      # Deploy to deploy branch (for Hostinger)
       - name: Deploy to deploy branch
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -25,3 +31,23 @@ jobs:
           publish_dir: ./dist
           publish_branch: deploy
           force_orphan: true
+
+      # Deploy to GitHub Pages
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy-pages:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
