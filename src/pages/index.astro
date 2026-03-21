@@ -2,29 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.tsx';
-import Timeline from '../components/Timeline.tsx';
-import Intralogistics from '../components/Intralogistics.tsx';
-import AIExpert from '../components/AIExpert.tsx';
-import Offer from '../components/Offer.tsx';
-import SocialProof from '../components/SocialProof.tsx';
+import About from '../components/About.tsx';
+import Jarvis from '../components/Jarvis.tsx';
+import Expertise from '../components/Expertise.tsx';
+import Results from '../components/Results.tsx';
+import Process from '../components/Process.tsx';
 import Contact from '../components/Contact.tsx';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Artur Myzer — AI Expert & Intralogistics Consultant">
+<Layout title="Artur Myziak — AI Expert, JARVIS as a Service, Intralogistyka">
   <Header />
   <main>
     <Hero client:load />
     <div class="section-divider"></div>
-    <Timeline client:visible />
+    <About client:visible />
     <div class="section-divider"></div>
-    <Intralogistics client:visible />
+    <Jarvis client:visible />
     <div class="section-divider"></div>
-    <AIExpert client:visible />
+    <Expertise client:visible />
     <div class="section-divider"></div>
-    <Offer client:visible />
+    <Results client:visible />
     <div class="section-divider"></div>
-    <SocialProof client:visible />
+    <Process client:visible />
     <div class="section-divider"></div>
     <Contact client:visible />
   </main>

@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title,
-  description = 'Artur Myzer — AI Expert & Intralogistics Consultant. Szkolenia AI dla firm B2B, wdrozenia AGV/AMR, metodologie Lean & DMAIC.'
+  description = 'Artur Myziak — AI Expert który zbudował JARVIS, system AI zarządzający firmami. Ekspert intralogistyki z 15+ lat doświadczenia. Poznaj JARVIS as a Service.'
 } = Astro.props;
 ---
 
@@ -18,11 +18,14 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="author" content="Artur Myzer" />
+    <meta name="author" content="Artur Myziak" />
 
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -37,7 +40,6 @@ const {
     <meta name="twitter:description" content={description} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <title>{title}</title>
 
@@ -45,14 +47,16 @@ const {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "Artur Myzer",
-      "jobTitle": "AI Expert & Intralogistics Consultant",
+      "name": "Artur Myziak",
+      "alternateName": "Artur Myzer",
+      "jobTitle": "AI Expert & Intralogistics Specialist",
       "url": "https://arturmyzer.ai",
+      "email": "artur.myziak@myzer.pl",
       "sameAs": ["https://www.linkedin.com/in/arturmyzer/"],
-      "knowsAbout": ["Artificial Intelligence", "Intralogistics", "AGV", "AMR", "Lean Manufacturing", "DMAIC"],
+      "knowsAbout": ["Artificial Intelligence", "JARVIS AI", "Intralogistics", "AGV", "AMR", "Lean Manufacturing"],
     })} />
   </head>
-  <body class="bg-am-dark">
+  <body class="bg-[#0d0d0d]">
     <slot />
   </body>
 </html>
