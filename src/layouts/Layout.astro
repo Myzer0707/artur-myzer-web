@@ -2,13 +2,13 @@
 import '../styles/global.css';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
 const {
-  title,
-  description = 'Artur Myziak — AI Expert który zbudował JARVIS, system AI zarządzający firmami. Ekspert intralogistyki z 15+ lat doświadczenia. Poznaj JARVIS as a Service.'
+  title = 'Artur Myzer | Super Moce Dla Twojej Firmy',
+  description = 'Artur Myzer — System AI do zarzadzania firma. Kursy, automatyzacja, JARVIS.'
 } = Astro.props;
 ---
 
@@ -18,14 +18,14 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="author" content="Artur Myziak" />
+    <meta name="author" content="Artur Myzer" />
 
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -47,16 +47,19 @@ const {
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "Artur Myziak",
-      "alternateName": "Artur Myzer",
-      "jobTitle": "AI Expert & Intralogistics Specialist",
+      "name": "Artur Myzer",
+      "jobTitle": "AI Expert",
       "url": "https://arturmyzer.ai",
-      "email": "artur.myziak@myzer.pl",
-      "sameAs": ["https://www.linkedin.com/in/arturmyzer/"],
-      "knowsAbout": ["Artificial Intelligence", "JARVIS AI", "Intralogistics", "AGV", "AMR", "Lean Manufacturing"],
+      "email": "artur@arturmyzer.ai",
+      "sameAs": [
+        "https://www.linkedin.com/in/arturmyzer/",
+        "https://www.youtube.com/@arturmyzer",
+        "https://x.com/arturmyzer"
+      ],
+      "knowsAbout": ["Artificial Intelligence", "JARVIS AI", "Automatyzacja", "Kursy AI"],
     })} />
   </head>
-  <body class="bg-[#0d0d0d]">
+  <body>
     <slot />
   </body>
 </html>

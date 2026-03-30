@@ -1,32 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.tsx';
-import About from '../components/About.tsx';
-import Jarvis from '../components/Jarvis.tsx';
-import Expertise from '../components/Expertise.tsx';
-import Results from '../components/Results.tsx';
-import Process from '../components/Process.tsx';
-import Contact from '../components/Contact.tsx';
-import Footer from '../components/Footer.astro';
+import Header from '../components/Header.tsx';
+import HeroFuturistic from '../components/ui/hero-futuristic.tsx';
+import FeatureProtocols from '../components/blocks/feature-protocols.tsx';
+import PricingProtocols from '../components/blocks/pricing-protocols.tsx';
 ---
 
-<Layout title="Artur Myziak — AI Expert, JARVIS as a Service, Intralogistyka">
-  <Header />
+<Layout
+  title="Artur Myzer | AI Management System dla firm B2B"
+  description="AI w firmie bez chaosu. Zbuduj system, który naprawdę pracuje. Protokoły wdrożeniowe, Scorecard i JARVIS."
+>
+  <!-- HEADER z glow-menu -->
+  <Header client:load />
+
   <main>
-    <Hero client:load />
-    <div class="section-divider"></div>
-    <About client:visible />
-    <div class="section-divider"></div>
-    <Jarvis client:visible />
-    <div class="section-divider"></div>
-    <Expertise client:visible />
-    <div class="section-divider"></div>
-    <Results client:visible />
-    <div class="section-divider"></div>
-    <Process client:visible />
-    <div class="section-divider"></div>
-    <Contact client:visible />
+    <!-- 1) HERO — WebGPU 3D (client-only, bez SSR) -->
+    <HeroFuturistic client:only="react" />
+
+    <!-- 2) PROTOKOŁY — Feature108 z tabs -->
+    <FeatureProtocols client:load />
+
+    <!-- 3) PRICING -->
+    <PricingProtocols client:load />
   </main>
-  <Footer />
 </Layout>

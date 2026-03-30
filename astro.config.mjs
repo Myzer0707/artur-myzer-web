@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
+import path from 'path';
 
 export default defineConfig({
   site: 'https://arturmyzer.ai',
@@ -8,4 +9,11 @@ export default defineConfig({
     react(),
     tailwind(),
   ],
+  vite: {
+    resolve: {
+      alias: {
+        '@': path.resolve('./src'),
+      },
+    },
+  },
 });
